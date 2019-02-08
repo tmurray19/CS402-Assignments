@@ -14,7 +14,16 @@ q3_decrypt = open('a1q3-cipher8-decrypt.txt', 'w')
 q3_str = 'mathematical'
 
 q4_file = open('a1q4-cipher8.txt', 'r')
+q4_decrypt = open('a1q4-cipher8-decrypt.txt', 'w')
+q4_str = 'MATHEMATICAL'
 
+
+print("Question 1: ")
+print(164**29 % 7)
+
+
+
+print("Question 2: ")
 q2_alpha = ShiftCipher(ALPHABET68)
 print(ALPHABET68)
 
@@ -53,7 +62,16 @@ q2_alpha.decrypt_file(57, 'a1q2-cipher7.txt', 'a1q2-cipher7-decrypt.txt')
 
 # Gulliver = vjaa:k9g
 print( q2_alpha.encrypt_string(57, 'Gulliver'))
-
 print(ALPHABET68.index('G'))
-
 print(ALPHABET68.index('v'))
+
+
+print("\nQuestion 3: ")
+
+'''
+for i in range(1, 69):
+    if(gcd(i, 68)==1):
+        print(i)
+'''
+
+q3_alpha = AffineCipher(ALPHABET68)
