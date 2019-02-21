@@ -27,9 +27,9 @@ print("Question 2: ")
 q2_alpha = ShiftCipher(ALPHABET68)
 print(ALPHABET68)
 
-print(ALPHABET68.index(' '))
+print('" "  = ', ALPHABET68.index(' '))
 
-print(ALPHABET68.index('3'))
+print('3  = ',ALPHABET68.index('3'))
 
 #q2_freq = frequency_histogram(q2_file.read(), ALPHABET68)
 '''
@@ -68,10 +68,61 @@ print(ALPHABET68.index('v'))
 
 print("\nQuestion 3: ")
 
-'''
+"""
 for i in range(1, 69):
     if(gcd(i, 68)==1):
         print(i)
-'''
+"""
+
+print('gcd = ', gcd(43,68))
+
+print("Modular Inverse")
+
 
 q3_alpha = AffineCipher(ALPHABET68)
+li = string_to_int_list(ALPHABET68, ALPHABET68)
+
+#q3_freq = frequency_histogram(q3_file.read(), ALPHABET68)
+
+print('c value = ', modular_inverse(53, 68))
+
+print('X = ', ALPHABET68.index('X'))
+print('" "  = ', ALPHABET68.index(' '))
+
+print('B = ', ALPHABET68.index('B'))
+print('e  = ', ALPHABET68.index('e'))
+print('t  = ', ALPHABET68.index('t'))
+
+
+
+q3_alpha.decrypt_file((53, 19), 'a1q3-cipher8.txt', 'a1q3-cipher8-decrypt.txt')
+
+
+print("\nQuestion 4: ")
+
+q4_alpha = VigenereCipher(ALPHABET27)
+
+#MATHEMATICAL = WBEUSNKUUPOM
+
+plain = "I HAD BETTER SAY SOMETHING ABOUT THIS"
+cipher ="SATNRALFEFSSJTMKNTYNQFVJXHLUSSOAMOBVC"
+
+testPli=[]
+testCli = []
+
+for ch in plain:
+    testPli.append(ALPHABET27.index(ch))
+print(testPli)
+
+for ch in cipher:
+    testCli.append(ALPHABET27.index(ch))
+print(testCli)
+
+for i in range(len(testPli)):
+    print(ALPHABET27[testCli[i] - testPli[i]])
+
+"""
+print('D = ', ALPHABET27.index('D')) # 3 (Cipher)
+print('N  = ', ALPHABET27.index('N')) # 13 (Plaintext)
+print(ALPHABET27[13-3]) # Plain - Cipher = key
+"""

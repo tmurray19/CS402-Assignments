@@ -41,11 +41,11 @@ def frequency_analysis(text, alphabet=None):
         D = {char: 0 for char in alphabet}
     else:
         D = {}
-        
+
     for char in text:
         D[char] = D.get(char,0) + 1
     return {char: float(count)/len(text) for char,count in D.items()}
-    
+
 def frequency_histogram(text, alphabet=None):
     import matplotlib.pyplot as plt
     D = frequency_analysis(text, alphabet)
@@ -86,7 +86,7 @@ def modular_inverse(a, m):
 
 def modular_inverse_of_matrix(A, m):
     from sympy import Matrix
-   
+
     A = Matrix(A)
     det = A.det()
     x = modular_inverse(int(det), m)
@@ -101,16 +101,16 @@ def modular_inverse_of_matrix(A, m):
 class Cipher:
     def __init__(self, alphabet):
         self.alphabet = alphabet
-    
+
     # The encryption and decryption function are assumed to act on lists of
     # integers from 0 up to and incluing len(alphabet) - 1.
-    
+
     def encrypt_int_list(self, key, int_list):
         raise NotImplementedError
 
     def decrypt_int_list(self, key, int_list):
         raise NotImplementedError
-    
+
     def encrypt_string(self, key, text):
         return int_list_to_string(self.alphabet,
                                   self.encrypt_int_list(key, string_to_int_list(self.alphabet, text)))
@@ -134,7 +134,7 @@ class Cipher:
 ########################################################################
 # SHIFT CIPHERS
 ########################################################################
-            
+
 class ShiftCipher(Cipher):
     def encrypt_int_list(self, key, int_list):
         return [(i + key) % len(self.alphabet) for i in int_list]
@@ -169,15 +169,15 @@ class VigenereCipher(Cipher):
         key_list = string_to_int_list(self.alphabet, key)
 
         return [(c + scalar * key_list[i % len(key_list)]) % len(self.alphabet) for i,c in enumerate(int_list)]
-    
+
     def encrypt_int_list(self, key, int_list):
         return self._process_int_list(key, int_list, +1)
-    
+
     def decrypt_int_list(self, key, int_list):
         return self._process_int_list(key, int_list, -1)
 
 ########################################################################
-# HIGHER-DIMENSIONAL AFFINE CIPHERS (INCL. HILL CIPHERS) 
+# HIGHER-DIMENSIONAL AFFINE CIPHERS (INCL. HILL CIPHERS)
 ########################################################################
 
 class HigherAffineCipher(Cipher):
@@ -187,14 +187,14 @@ class HigherAffineCipher(Cipher):
 
     def encrypt_int_list(self, key, int_list):
         from sympy import Matrix
-        
+
         m = len(self.alphabet)
-        
+
         A,b = Matrix(key[0]), Matrix(key[1])
         if len(int_list) % self.dimension:
             raise ValueError('message size is not a multiple of the dimension')
 
-        if gcd(A.det(), m) != 1: 
+        if gcd(A.det(), m) != 1:
             raise ValueError('invalid key')
 
         ciphertext = []
@@ -206,7 +206,7 @@ class HigherAffineCipher(Cipher):
 
     def decrypt_int_list(self, key, int_list):
         from sympy import Matrix
-        
+
         A,b = Matrix(key[0]), Matrix(key[1])
         B = Matrix(modular_inverse_of_matrix(A, len(self.alphabet)))
         return self.encrypt_int_list([B, list(-B*b)], int_list)
